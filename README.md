@@ -1,11 +1,18 @@
 # SlightlyDelayedGram
-Instagram Knockoff project for SOEN341. Creating an Instagram-like application that implements 3 core features: Allows users to post a picture from their account, follow other users in order to see their posts, and leave comments attached to a posted picture.  
+Instagram Knockoff project for SOEN341. Creating an Instagram-like application that implements 3 core features:<br/>
+-Allows users to post a picture from their account<br/>
+-Follow other users in order to see their posts<br/>
+-Leave comments attached to a posted picture.<br/>
 
-The application will also include two additional features, which are **TBD**.
+The application will also include two additional features, which are:<br/>
+-Direct user to user Messaging<br/>
+-Forwarding Posts to other Users<br/>
 
-SlightlyDelayedGram will employ the following technologies and services:
-Amazon Web Services (AWS) or a Home Server or any other Virtual Private Server (VPS) Provider.
-
+SlightlyDelayedGram will employ the following technologies and services:<br/>
+-Python (Utilizing Django Web Framework)<br/>
+-HTML and CSS (Web Layout)<br/>
+-Amazon Web Services (AWS)<br/>
+-Docker (OS Level Virtualization)<br/>
 
 ### Group Members
 |       Name                |       Student ID          |       GitHub              |
