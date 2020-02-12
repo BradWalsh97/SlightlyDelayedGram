@@ -1,0 +1,1 @@
+Image folder will contain any necessary images that will be needed throughout the website. 
