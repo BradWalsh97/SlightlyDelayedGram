@@ -9,5 +9,5 @@ def get_image_path(instance, filename):
 
 class Picture(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    picture_object = models.ImageField(upload_to='photos/')
+    picture_object = models.ImageField(upload_to='photos/', blank=True)
     post_date = models.DateTimeField('Date Posted')
