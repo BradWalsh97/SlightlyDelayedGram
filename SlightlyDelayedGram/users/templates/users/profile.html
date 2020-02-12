@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     {% load crispy_forms_tags %}
     {% if messages %}
         {% for message in messages %}
@@ -9,4 +9,25 @@
         {% endfor %}
     {% endif%}
     <h1>{{ user.username }}</h1>
+    <body>
+        <form action='upload' method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input type="file" name="image">
+            </p>
+            <input type="submit" value="Submit" />
+        </form>
+        {% if latest_picture_list %}
+            {% for picture in latest_picture_list %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="lead"><img src="{{picture.picture_object.url}}"/></p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+        <p>Get started by uploading your first picture!</p>
+        {% endif %}
+    </body>
+
 </html>
