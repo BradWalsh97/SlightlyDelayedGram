@@ -20,19 +20,12 @@ def register(request):
 
 @login_required
 def profile(request):
-    latest_picture_list = Picture.objects.filter(owner=request.user).order_by('-post_date')[:5]
+    latest_picture_list = Picture.objects.filter(owner=request.user).order_by('-post_date')
     context = {'latest_picture_list': latest_picture_list}
     return render(request,'users/profile.html', context)
 
 def upload_picture(request): 
-    if request.method == 'POST': 
-        form = PictureUploadForm(request.POST, request.FILES)        
-        if form.is_valid(): 
-            form.save() 
-            return redirect('success') 
-    else: 
-        form = PictureUploadForm()
-    return render(request, 'profile.html', {'form' : form}) 
-   
-def success(request): 
-    return HttpResponse('successfully uploaded')
+    pic = request.FILES['image']
+    model = Picture(owner=request.user, picture_object=pic, post_date=timezone.now())
+    model.save()
+    return redirect('profile')

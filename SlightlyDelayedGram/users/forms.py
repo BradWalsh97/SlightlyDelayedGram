@@ -11,7 +11,5 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class PictureUploadForm(forms.ModelForm):
-
-    class Meta: 
-        model = Picture
-        fields = ['owner', 'picture_object', 'post_date']
+    
+    picture = forms.ImageField()
