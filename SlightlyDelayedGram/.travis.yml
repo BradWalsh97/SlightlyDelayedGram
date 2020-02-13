@@ -1,9 +1,10 @@
 language: python
 python: 
     - "3.6.9"
-braches:
+branches:
  only:
    - master
    - SetupTravisCI-Issue#23
+before_script: pip install -r requirements.txt
 script: 
-  - python emptyTest.py
+  - python3 emptyTest.py
