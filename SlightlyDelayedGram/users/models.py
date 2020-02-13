@@ -12,6 +12,7 @@ class Picture(models.Model):
     picture_object = models.ImageField(upload_to='photos/', blank=True)
     post_date = models.DateTimeField('Date Posted')
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')

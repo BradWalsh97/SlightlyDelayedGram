@@ -47,15 +47,26 @@
 {% endif%}
 
 
-<h1 style = "margin-left:285px;"> {{ user.username }}</h1>
+<div style = "margin-left:285px;" class = "content-section">
+    <div class = "media">
+        <img width="100" height="100" class="img-circle" src="{{ user.profile.image.url|default:"media/default.jpg" }} ">
+        <div class = "media-body">
+            <h1 class = "account-heading">{{ user.username }}</h1>
+                <p>
+                    <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-plus"></span> Follow this User</a>
+                </p>
+        </div>
+    </div>
+</div>
 
-<body>
-<form  style = "margin-left:285px; margin-bottom:25px; margin-top:25px;" action='upload' method="post" enctype="multipart/form-data">
+
+<body style="background-color:#E9EAEB;">
+<form  style = "margin-left:285px; margin-bottom:5px; margin-top:5px;" action='upload' method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>
+    <p class="btn btn-default" >
         <input type="file" name="image">
     </p>
-    <input type="submit" value="Submit" />
+    <input href="#" class="btn btn-default" role="button" type="submit" value="Submit" />
 </form>
 
 
@@ -69,9 +80,9 @@
                             <div class="thumbnail">
                                 <div class="caption">
                                     <img src="{{picture.picture_object.url}}" width="450" height="375" class="img-rounded"/>
-                                    <h4>POST TITLE</h4>
-                <p>By Jonathan Grant on April 1st</p>
-                <p>POST CAPTION</p>
+                                    <h4>{{ picture.title }}</h4>
+                <p>By {{ user.username }} on {{ picture.post_date }}</p>
+                <p>{{ picture.caption }}</p>
                 <p>
                     <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
                 </p>
