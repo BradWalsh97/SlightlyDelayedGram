@@ -63,3 +63,9 @@ def upload_picture(request):
         return redirect('profile')
     except:
         return redirect('profile')
+
+def delete_picture(request, pk):
+    if request.method == 'POST':
+        picture = Picture.objects.get(pk=pk)
+        picture.delete()
+    return redirect('profile')
