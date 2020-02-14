@@ -27,3 +27,8 @@ SlightlyDelayedGram will employ the following technologies and services:<br/>
 |Christian Galante          |40006461                   |@NihlathakTheNecromancer    |
 |John A. Baroudi            |40074027                   |@johnab4444                 |
 |Nick Di Marco              |40060004                   |@nickydime                  |
+
+
+## Travis CI Test Status
+[![Build Status](https://travis-ci.org/BradWalsh97/SlightlyDelayedGram.svg?branch=SetupTravisCI-Issue%2323)](https://travis-ci.org/BradWalsh97/SlightlyDelayedGram)
+
