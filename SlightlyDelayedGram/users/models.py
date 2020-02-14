@@ -12,6 +12,10 @@ class Picture(models.Model):
     picture_object = models.ImageField(upload_to='photos/', blank=True)
     post_date = models.DateTimeField('Date Posted')
 
+    def delete(self, *args, ** kwargs):
+        self.picture_object.delete()
+        super().delete(*args, **kwargs)
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
