@@ -1,0 +1,22 @@
+{% extends "users/base.html" %}
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <p class="lead">
+                <div style = "margin-left:270px;"  class="row">
+                    <div class="col-sm-6 col-md-4" >
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <img src="{{object.picture_object.url}}" width="450" height="375" class="img-rounded" style= "margin-top:10px; margin-bottom:10px"/>
+            <p>By {{ object.owner }} on {{ object.post_date }}</p>
+            <p>
+                <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
+            </p>
+        </div>
+    </div>
+    </div>
+    </div>
+    </p>
+    </div>
+    </div>
+{% endblock %}

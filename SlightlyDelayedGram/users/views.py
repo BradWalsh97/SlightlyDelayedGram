@@ -5,34 +5,32 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.utils import timezone
 from .forms import UserRegisterForm
 from .models import Picture
-
-posts = [
-    {
-        'author': 'Jonathan',
-        'title': 'Test Post 1',
-        'content': 'Check out this sick pic',
-        'date_posted': 'January 17, 2019'
-    },
-    {
-        'author': 'Jonathan',
-        'title': 'Test Post 2',
-        'content': 'Check out this sick pic',
-        'date_posted': 'January 18, 2019'
-    },
-    {
-        'author': 'Jonathan',
-        'title': 'Test Post 3',
-        'content': 'Check out this sick pic',
-        'date_posted': 'January 19, 2019'
-    },
-]
+from django.views.generic import ListView, DetailView
 
 
 def home(request):
     context = {
-        'posts': posts
+        'Pictures': Picture.objects.all()
     }
     return render(request, 'users/main.html', context)
+
+
+def trending(request):
+    context = {
+        'Pictures': Picture.objects.all()
+    }
+    return render(request, 'users/trending.html', context)
+
+
+class PictureListView(ListView):
+    model = Picture
+    template_name = 'users/main.html'
+    context_object_name = 'Pictures'
+    ordering = ['-post_date']
+
+
+class PictureDetailView(DetailView):
+    model = Picture
 
 
 def register(request):
@@ -63,6 +61,7 @@ def upload_picture(request):
         return redirect('profile')
     except:
         return redirect('profile')
+
 
 def delete_picture(request, pk):
     if request.method == 'POST':

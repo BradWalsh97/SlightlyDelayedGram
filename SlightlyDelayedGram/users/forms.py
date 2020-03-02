@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Picture
 
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
