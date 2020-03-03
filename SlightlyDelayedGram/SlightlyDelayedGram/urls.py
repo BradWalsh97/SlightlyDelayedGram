@@ -33,4 +33,5 @@ urlpatterns = [
     path('profile/upload', user_views.upload_picture, name='upload'),
     path('profile/<int:pk>/', user_views.delete_picture, name='delete'),
     path('trending/', user_views.trending, name='trending'),
+    path('search/', user_views.search, name='search')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
