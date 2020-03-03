@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from .forms import UserRegisterForm
-from .models import Picture
+from .models import Picture, Profile
 from django.views.generic import ListView, DetailView
+from django.db.models import Q
 
 
 def home(request):
@@ -68,3 +69,20 @@ def delete_picture(request, pk):
         picture = Picture.objects.get(pk=pk)
         picture.delete()
     return redirect('profile')
+
+@login_required
+def search(request):
+    if request.method == 'POST':
+        srch = request.POST['srh']
+
+        if srch:
+            match = Profile.objects.filter(Q(user__username__istartswith=srch))
+
+            if match:
+                return render(request, 'users/search.html', {'sr':match})
+            else:
+                messages.error(request, 'no result found')
+        
+        else:
+            return HttpResponseRedirect('/search/')
+    return render(request, 'users/search.html')
