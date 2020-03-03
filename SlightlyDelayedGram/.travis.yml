@@ -8,4 +8,4 @@ branches:
    - Issue-#46
 before_script: pip install -r SlightlyDelayedGram/requirements.txt
 script: 
-  - python manage.py test
+  - python SlightlyDelayedGram/manage.py test
