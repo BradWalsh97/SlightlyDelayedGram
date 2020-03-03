@@ -4,8 +4,7 @@ python:
 branches:
  only:
    - master
-   - SetupTravisCI-Issue#23
-   - Issue-#46
+   - Sprint3
 before_script: pip install -r SlightlyDelayedGram/requirements.txt
 script: 
   - python SlightlyDelayedGram/manage.py test
