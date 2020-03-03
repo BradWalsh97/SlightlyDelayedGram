@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+{% extends "users/base.html" %}
+{% block content %}
     {% load crispy_forms_tags %}
     {% if messages %}
         {% for message in messages %}
@@ -25,4 +25,4 @@
             </small>
         </div>
     </div>
-</html>
+{% endblock %}
