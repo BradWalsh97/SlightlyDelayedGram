@@ -1,6 +1,6 @@
-#from django.test import TestCase
+from django.test import TestCase
 from django.urls import reverse
-from unittest import TestCase
+#from unittest import TestCase
 
 # Create your tests here.
 class UsersViewsTest(TestCase):

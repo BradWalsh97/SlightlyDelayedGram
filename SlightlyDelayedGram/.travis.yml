@@ -5,6 +5,11 @@ branches:
  only:
    - master
    - Sprint3
+   - Issue-#46
 before_script: pip install -r SlightlyDelayedGram/requirements.txt
 script: 
-  - python SlightlyDelayedGram/manage.py test
+  - cd SlightlyDelayedGram
+  - pwd
+  - ls
+  - tail user/tests.py
+  - python manage.py test
