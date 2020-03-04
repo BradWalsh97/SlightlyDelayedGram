@@ -1,0 +1,10 @@
+language: python
+python: 
+    - "3.6.9"
+branches:
+ only:
+   - master
+   - SetupTravisCI-Issue#23
+before_script: pip install -r SlightlyDelayedGram/requirements.txt
+script: 
+  - python3 SlightlyDelayedGram/emptyTest.py
