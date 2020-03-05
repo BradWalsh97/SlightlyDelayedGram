@@ -11,6 +11,7 @@
                             <p>By {{ picture.owner }} on {{ picture.post_date }}</p>
                             <p>
                                 <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
+                                <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-plus"></span> Follow this User</a>
                             </p>
 
                             {% for comment in picture.comments.all %}
@@ -21,16 +22,19 @@
                                     <p style = "margin-top:0" class="date">{{ comment.created_date }}</p>
                                 </div>
                             {% empty %}
-                                <p>No comments here yet :(</p>
+                                <p>No one has commented on this photo yet.</p>
                             {% endfor %}
                         <br>
                             <div>
                                 {% load crispy_forms_tags %}
-
                                   <form method="post">
                                     {% csrf_token %}
                                     {{ comment_form|crispy }}
+                                      {% if request.user.is_authenticated %}
                                     <button type="submit" class="btn btn-success">Submit</button>
+                                      {% else %}
+                                    <button type="submit" class="btn btn-success"disabled>Submit</button>
+                                      {% endif %}
                                   </form>
                             </div>
                         </div>

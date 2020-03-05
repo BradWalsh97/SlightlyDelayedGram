@@ -39,7 +39,7 @@ def picture_detail(request, pk):
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.picture = picture  # Changed from .post to .picture MAY BE WRONG
-            comment.author = picture.owner
+            comment.author = request.user
             comment_form.save()
     else:
         comment_form = CommentForm()
