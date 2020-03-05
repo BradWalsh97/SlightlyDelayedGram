@@ -1,0 +1,69 @@
+{% extends "users/base.html" %}
+{% block content %}
+    {% load crispy_forms_tags %}
+    {% if messages %}
+        {% for message in messages %}
+            <div>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif%}
+
+
+    <div style = "margin-left:285px;" class = "content-section">
+        <div class = "media">
+            <img width="100" height="100" class="img-circle" src="{{ user.profile.image.url|default:"media/default.jpg" }} ">
+            <div class = "media-body">
+                <h1 class = "account-heading">{{ user.username }}</h1>
+                    <p>
+                        <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-plus"></span> Follow this User</a>
+                    </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <form  style = "margin-left:285px; margin-bottom:5px; margin-top:5px;" action='upload' method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p class="btn btn-default" >
+            <input type="file" name="image">
+        </p>
+        <input href="#" class="btn btn-default" role="button" type="submit" value="Submit" />
+    </form>
+
+
+    {% if latest_picture_list %}
+        {% for picture in latest_picture_list %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="lead">
+                        <div style = "margin-left:270px;"  class="row">
+                            <div class="col-sm-6 col-md-4" >
+                                <div class="thumbnail">
+                                    <div class="caption">
+                                        <img src="{{picture.picture_object.url}}" width="450" height="375" class="img-rounded"/>
+                                        <h4>{{ picture.title }}</h4>
+                    <p>By {{ user.username }} on {{ picture.post_date }}</p>
+                    <p>{{ picture.caption }}</p>
+                    <p>
+                        <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
+                    </p>
+                    <p>
+                        <form method="POST" action="{% url 'delete' picture.pk %}">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </p>
+                </div>
+            </div>
+            </div>
+            </div>
+            </p>
+            </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style = "margin-left:285px;" >Get started by uploading your first picture!</p>
+    {% endif %}
+{% endblock %}
