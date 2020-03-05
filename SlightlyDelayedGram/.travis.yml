@@ -1,8 +1,8 @@
-branches:
- only:
-   - master
-   - Sprint3
-   - Issue-#46
+#branches:
+# only:
+#   - master
+#   - Sprint3
+#   - Issue-#46
 
 dist: bionic
 language: python
