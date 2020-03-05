@@ -1,38 +1,56 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
-from .forms import UserRegisterForm
-from .models import Picture
-
-posts = [
-    {
-        'author': 'Jonathan',
-        'title': 'Test Post 1',
-        'content': 'Check out this sick pic',
-        'date_posted': 'January 17, 2019'
-    },
-    {
-        'author': 'Jonathan',
-        'title': 'Test Post 2',
-        'content': 'Check out this sick pic',
-        'date_posted': 'January 18, 2019'
-    },
-    {
-        'author': 'Jonathan',
-        'title': 'Test Post 3',
-        'content': 'Check out this sick pic',
-        'date_posted': 'January 19, 2019'
-    },
-]
+from .forms import UserRegisterForm, CommentForm
+from .models import Picture, Profile, Comment
+from django.views.generic import ListView, DetailView
+from django.db.models import Q
 
 
 def home(request):
     context = {
-        'posts': posts
+        'Pictures': Picture.objects.all()
     }
     return render(request, 'users/main.html', context)
+
+
+def trending(request):
+    context = {
+        'Pictures': Picture.objects.all()
+    }
+    return render(request, 'users/trending.html', context)
+
+
+class PictureListView(ListView):
+    model = Picture
+    template_name = 'users/main.html'
+    context_object_name = 'Pictures'
+    ordering = ['-post_date']
+
+
+def picture_detail(request, pk):
+    picture = get_object_or_404(Picture, pk=pk)
+    comments = Comment.objects.filter(picture=picture)
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST or None)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.picture = picture  # Changed from .post to .picture MAY BE WRONG
+            comment.author = picture.owner
+            comment_form.save()
+    else:
+        comment_form = CommentForm()
+
+    context = {
+        'picture': picture,
+        'comments': comments,
+        'comment_form': comment_form,
+    }
+
+    return render(request, 'users/picture_detail.html', context)
 
 
 def register(request):
@@ -64,8 +82,26 @@ def upload_picture(request):
     except:
         return redirect('profile')
 
+
 def delete_picture(request, pk):
     if request.method == 'POST':
         picture = Picture.objects.get(pk=pk)
         picture.delete()
     return redirect('profile')
+
+@login_required
+def search(request):
+    if request.method == 'POST':
+        srch = request.POST['srh']
+
+        if srch:
+            match = Profile.objects.filter(Q(user__username__istartswith=srch))
+
+            if match:
+                return render(request, 'users/search.html', {'sr':match})
+            else:
+                messages.error(request, 'no result found')
+        
+        else:
+            return HttpResponseRedirect('/search/')
+    return render(request, 'users/search.html')
