@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
-from .forms import UserRegisterForm
-from .models import Picture, Profile
+from .forms import UserRegisterForm, CommentForm
+from .models import Picture, Profile, Comment
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 
@@ -30,8 +30,27 @@ class PictureListView(ListView):
     ordering = ['-post_date']
 
 
-class PictureDetailView(DetailView):
-    model = Picture
+def picture_detail(request, pk):
+    picture = get_object_or_404(Picture, pk=pk)
+    comments = Comment.objects.filter(picture=picture)
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST or None)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.picture = picture  # Changed from .post to .picture MAY BE WRONG
+            comment.author = picture.owner
+            comment_form.save()
+    else:
+        comment_form = CommentForm()
+
+    context = {
+        'picture': picture,
+        'comments': comments,
+        'comment_form': comment_form,
+    }
+
+    return render(request, 'users/picture_detail.html', context)
 
 
 def register(request):

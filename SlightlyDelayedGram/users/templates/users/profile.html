@@ -48,6 +48,7 @@
                     <p>{{ picture.caption }}</p>
                     <p>
                         <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
+                        <a href="{% url 'picture_detail' pk=picture.pk %}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-comment"></span> {{ picture.comments.count }} Comments</a>
                     </p>
                     <p>
                         <form method="POST" action="{% url 'delete' picture.pk %}">
