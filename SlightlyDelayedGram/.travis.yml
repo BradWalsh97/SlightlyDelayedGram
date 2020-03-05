@@ -1,15 +1,23 @@
-language: python
-python: 
-    - "3.6.9"
 branches:
  only:
    - master
    - Sprint3
    - Issue-#46
-before_script: pip install -r SlightlyDelayedGram/requirements.txt
+dist: bionic
+language: python
+python: 
+   - "3.6.9"
+services: 
+  - sqlite3
+env:
+  - DJANGO_VERSION=3.0.2 DB=sqlite3
+install: 
+  - pip install -r SlightlyDelayedGram/requirements.txt
+before_script: 
+  #- mysql -e 'create database test;' -u root
 script: 
   - cd SlightlyDelayedGram
-  - pwd
-  - ls
-  - tail user/tests.py
+  #- pwd
+  #- ls
+  #- tail users/tests.py
   - python manage.py test
