@@ -18,7 +18,18 @@ class Picture(models.Model):
         super().delete(*args, **kwargs)
 
     def __str__(self):
-        return self.picture_object
+        return str(self.pk)
+
+
+class Comment(models.Model):
+    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    text = models.TextField(verbose_name="Add your Comment")
+    created_date = models.DateTimeField(default=timezone.now)
+    approved_comment = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '{}-{}'.format(self.text, str(self.author.username))
 
 
 class Profile(models.Model):
