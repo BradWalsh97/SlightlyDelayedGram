@@ -8,6 +8,8 @@ from .models import Picture, Profile, Comment
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 
+import json
+
 
 def home(request):
     context = {
@@ -69,8 +71,27 @@ def register(request):
 @login_required
 def profile(request):
     latest_picture_list = Picture.objects.filter(owner=request.user).order_by('-post_date')
-    context = {'latest_picture_list': latest_picture_list}
+
+    # Determine if profile is followable
+    is_followable = True
+    if(Profile.user == request.user):
+        is_followable = False
+    else:
+        following = Profile.objects.filter(user=request.user).following
+        following = json.loads(following)
+        if(following.contains(request.user)):
+            is_followable = False
+
+    context = {'latest_picture_list': latest_picture_list, 'is_followable': is_followable}
     return render(request,'users/profile.html', context)
+
+@login_required
+def follow_user(request, pk):
+    user_followed = Profile.objects.get(pk=pk) #The user which is being followed
+    user_following = Profile.objects.filter(user=request.user) #The user who is following
+    # Append users to corresponding lists
+    user_followed.followed = user_followed.followed.Append(user_following.user)
+    user_following.following = user_following.following.Append(user_followed.user)
 
 
 def upload_picture(request):
