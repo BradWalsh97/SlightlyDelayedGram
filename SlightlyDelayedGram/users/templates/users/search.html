@@ -28,7 +28,7 @@
                         {% for k in sr %}
                             <table>
                                 <tr>
-                                    <td>{{ k.user }}</td>
+                                    <a href=" {% url 'peer_profile' pk=k.pk %}"> {{k.user}} </a>
                                 </tr>
                             </table>
                         {% endfor %}
