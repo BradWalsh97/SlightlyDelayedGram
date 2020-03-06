@@ -7,6 +7,7 @@ from .forms import UserRegisterForm, CommentForm
 from .models import Picture, Profile, Comment
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
+from django.core.mail import send_mail
 
 
 def home(request):
@@ -71,6 +72,58 @@ def profile(request):
     latest_picture_list = Picture.objects.filter(owner=request.user).order_by('-post_date')
     context = {'latest_picture_list': latest_picture_list}
     return render(request,'users/profile.html', context)
+
+@login_required
+def follow_user(request, pk):
+    user_followed = Profile.objects.get(pk=pk) #The user which is being followed
+    user_following = Profile.objects.get(user=request.user) #The user who is following
+    if request.method == 'POST':
+        # Append users to corresponding lists
+        if not user_followed.followed:
+            user_followed.followed = user_following.user.username
+        else:
+            user_followed.followed = user_followed.followed + "," + user_following.user.username
+        if not user_following.following:
+            user_following.following = user_followed.user.username
+        else:
+            user_following.following = user_following.following + "," + user_followed.user.username
+        
+        user_following.save()
+        user_followed.save()
+
+    send_mail('Follow Notification',
+    user_following.user.username + ' is now following you!',
+    'SlightlyDelayedGram123@gmail.com',
+    [user_followed.user.email],
+    fail_silently=False)
+
+    #Reload Peer_Profile
+    profile = Profile.objects.get(pk=pk)
+    is_followable = False
+    latest_picture_list = Picture.objects.filter(owner=user_followed.user).order_by('-post_date')
+    context = {'latest_picture_list': latest_picture_list, 'profile': profile, 'is_followable': is_followable}
+    return render(request,'users/peer_profile.html', context)
+
+def peer_profile(request, pk):
+    profile = Profile.objects.get(pk=pk)
+    requesting_user = Profile.objects.get(user=request.user)
+
+    # Determine if profile is followable
+    is_followable = True
+    if(profile.user == request.user):
+        is_followable = False
+    else:
+        following = Profile.objects.get(user=request.user).following
+        following = following.split(',')
+        for user in following:
+            print(request.user.username)
+            if(user == profile.user.username):
+                is_followable = False
+                break
+
+    latest_picture_list = Picture.objects.filter(owner=profile.user).order_by('-post_date')
+    context = {'latest_picture_list': latest_picture_list, 'profile': profile, 'is_followable': is_followable}
+    return render(request,'users/peer_profile.html', context)
 
 
 def upload_picture(request):
