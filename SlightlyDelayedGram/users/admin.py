@@ -1,7 +1,9 @@
 from django.contrib import admin
 from .models import Profile
 from .models import Picture
+from .models import Comment
 
 
 admin.site.register(Profile)
 admin.site.register(Picture)
+admin.site.register(Comment)
