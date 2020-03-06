@@ -14,10 +14,12 @@ env:
 install: 
   - pip install -r SlightlyDelayedGram/requirements.txt
 before_script: 
+  - cd SlightlyDelayedGram
+  - manage.py makemigrations
+  - manage.py migrate
   #- mysql -e 'create database test;' -u root
 script: 
-  - cd SlightlyDelayedGram
-  - pwd
-  - ls
+  #- pwd
+  #- ls
   #- tail users/tests.py
   - python manage.py test
