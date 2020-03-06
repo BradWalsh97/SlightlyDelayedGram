@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div>
+            <h1>Search Profile</h1>
+            <form method="Post" action="/search/">
+                {% csrf_token %}
+                <div>
+                    <div>
+                <input type="text" name="srh" class="form-control" placeholder="Enter profile">
+                    </div>
+                    <label>
+                        <button type="submit" class="btn btn-danger">Search</button>
+                    </label>
+                </div>
+            </form>
+            <div>
+                {% if messages %}
+                <ul class="messages">
+                    {% for k in messages %}
+                        <li>{{ k }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div><br>
+                <div>
+                    {% if sr %}
+                        {% for k in sr %}
+                            <table>
+                                <tr>
+                                    <a href=" {% url 'peer_profile' pk=k.pk %}"> {{k.user}} </a>
+                                </tr>
+                            </table>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+        </div>
+    </body>
+</html>

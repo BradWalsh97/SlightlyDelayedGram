@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+{% extends "users/base.html" %}
+{% block content %}
     {% if messages %}
         {% for message in messages %}
             <div>
@@ -13,4 +13,4 @@
             <a href="{% url 'login' %}">Log In Again</a>
         </small>
     </div>
-</html>
+{% endblock %}
