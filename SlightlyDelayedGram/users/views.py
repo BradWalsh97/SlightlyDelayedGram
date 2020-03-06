@@ -72,6 +72,12 @@ def profile(request):
     context = {'latest_picture_list': latest_picture_list}
     return render(request,'users/profile.html', context)
 
+def peer_profile(request, pk):
+    profile = Profile.objects.get(pk=pk)
+    latest_picture_list = Picture.objects.filter(owner=profile.user).order_by('-post_date')
+    context = {'latest_picture_list': latest_picture_list, 'profile': profile}
+    return render(request,'users/peer_profile.html', context)
+
 
 def upload_picture(request):
     try:
