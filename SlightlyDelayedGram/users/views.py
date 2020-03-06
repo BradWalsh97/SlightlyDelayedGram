@@ -8,6 +8,7 @@ from .models import Picture, Profile, Comment
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 
 def home(request):
@@ -131,6 +132,18 @@ def upload_picture(request):
         pic = request.FILES['image']
         model = Picture(owner=request.user, picture_object=pic, post_date=timezone.now())
         model.save()
+        profile = Profile.objects.get(user=request.user)
+        followers_list = profile.following.split(',')
+        print(followers_list)
+        for follower in followers_list:
+            user_email = User.objects.get(username=follower).email
+            print(user_email)
+            send_mail('Picture notif',
+            request.user.username + ' has posted!',
+            'SlightlyDelayedGram123@gmail.com',
+            [user_email],
+            fail_silently=False)
+
         return redirect('profile')
     except:
         return redirect('profile')
