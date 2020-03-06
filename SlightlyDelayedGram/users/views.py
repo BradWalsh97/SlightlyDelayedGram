@@ -134,12 +134,12 @@ def upload_picture(request):
         model = Picture(owner=request.user, picture_object=pic, post_date=timezone.now())
         model.save()
         profile = Profile.objects.get(user=request.user)
-        followers_list = profile.following.split(',')
+        followers_list = profile.followed.split(',')
         print(followers_list)
         for follower in followers_list:
             user_email = User.objects.get(username=follower).email
             print(user_email)
-            send_mail('Picture notif',
+            send_mail('New Picture Notification',
             request.user.username + ' has posted!',
             'SlightlyDelayedGram123@gmail.com',
             [user_email],
