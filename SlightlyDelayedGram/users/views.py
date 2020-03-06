@@ -72,10 +72,43 @@ def profile(request):
     context = {'latest_picture_list': latest_picture_list}
     return render(request,'users/profile.html', context)
 
+@login_required
+def follow_user(request, pk):
+    if request.method == 'POST':
+        user_followed = Profile.objects.get(pk=pk) #The user which is being followed
+        user_following = Profile.objects.get(user=request.user) #The user who is following
+        # Append users to corresponding lists
+        user_followed.followed = user_followed.followed + "," + user_following.user.username
+        user_following.following = user_following.following + "," + user_followed.user.username
+        user_following.save()
+        user_followed.save()
+
+    #Reload Peer_Profile
+    profile = Profile.objects.get(pk=pk)
+    is_followable = False
+    latest_picture_list = Picture.objects.filter(owner=user_followed.user).order_by('-post_date')
+    context = {'latest_picture_list': latest_picture_list, 'profile': profile, 'is_followable': is_followable}
+    return render(request,'users/peer_profile.html', context)
+
 def peer_profile(request, pk):
     profile = Profile.objects.get(pk=pk)
+    requesting_user = Profile.objects.get(user=request.user)
+
+    # Determine if profile is followable
+    is_followable = True
+    if(profile.user == request.user):
+        is_followable = False
+    else:
+        following = Profile.objects.get(user=request.user).following
+        following = following.split(',')
+        for user in following:
+            print(request.user.username)
+            if(user == profile.user.username):
+                is_followable = False
+                break
+
     latest_picture_list = Picture.objects.filter(owner=profile.user).order_by('-post_date')
-    context = {'latest_picture_list': latest_picture_list, 'profile': profile}
+    context = {'latest_picture_list': latest_picture_list, 'profile': profile, 'is_followable': is_followable}
     return render(request,'users/peer_profile.html', context)
 
 
