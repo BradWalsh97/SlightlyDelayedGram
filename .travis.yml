@@ -10,7 +10,7 @@ python:
 services: 
   - sqlite3
 env:
-  - DJANGO_VERSION=3.0.2 DB=sqlite3
+  - DJANGO_VERSION=3.0.4 DB=sqlite3
 install: 
   - pip install -r SlightlyDelayedGram/requirements.txt
 before_script: 
