@@ -17,7 +17,7 @@ before_script:
   #- mysql -e 'create database test;' -u root
 script: 
   - cd SlightlyDelayedGram/SlightlyDelayedGram
-  #- pwd
-  #- ls
+  - pwd
+  - ls
   #- tail users/tests.py
   - python manage.py test
