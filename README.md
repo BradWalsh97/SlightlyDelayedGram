@@ -30,5 +30,5 @@ SlightlyDelayedGram will employ the following technologies and services:<br/>
 
 
 ## Travis CI Test Status
-Master [[![Build Status](https://travis-ci.org/BradWalsh97/SlightlyDelayedGram.svg?branch=master)](https://travis-ci.org/BradWalsh97/SlightlyDelayedGram)
+Master: [![Build Status](https://travis-ci.org/BradWalsh97/SlightlyDelayedGram.svg?branch=master)](https://travis-ci.org/BradWalsh97/SlightlyDelayedGram)
 
