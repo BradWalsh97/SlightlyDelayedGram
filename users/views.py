@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
@@ -30,6 +31,13 @@ class PictureListView(ListView):
     ordering = ['-post_date']
 
 
+class UserPictureListView(ListView):
+    model = Picture
+    template_name = 'users/peer_profile.html'
+    context_object_name = 'Pictures'
+    ordering = ['-post_date']
+
+
 class PictureDetailView(DetailView):
     model = Picture
 
@@ -51,12 +59,16 @@ def register(request):
 def profile(request):
     latest_picture_list = Picture.objects.filter(owner=request.user).order_by('-post_date')
     context = {'latest_picture_list': latest_picture_list}
-    return render(request,'users/profile.html', context)
+    return render(request, 'users/profile.html', context)
 
-def peer_profile(request):
-    latest_picture_list = Picture.objects.filter(owner=request.user).order_by('-post_date')
-    context = {'latest_picture_list': latest_picture_list}
-    return render(request,'users/peer_profile.html', context)
+
+def peer_profile(request, pk):
+    if request.method == 'POST':
+        latest_picture_list = Picture.objects.get(pk=pk).order_by('-post_date')
+        context = {'latest_picture_list': latest_picture_list}
+    return render(request, 'users/peer_profile.html', context)
+    # return Picture.objects.filter(owner=username).order_by('-post_date')
+
 
 def upload_picture(request):
     try:
@@ -74,6 +86,7 @@ def delete_picture(request, pk):
         picture.delete()
     return redirect('profile')
 
+
 @login_required
 def search(request):
     if request.method == 'POST':
@@ -83,10 +96,10 @@ def search(request):
             match = Profile.objects.filter(Q(user__username__istartswith=srch))
 
             if match:
-                return render(request, 'users/search.html', {'sr':match})
+                return render(request, 'users/search.html', {'sr': match})
             else:
                 messages.error(request, 'no result found')
-        
+
         else:
             return HttpResponseRedirect('/search/')
     return render(request, 'users/search.html')

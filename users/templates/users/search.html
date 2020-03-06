@@ -30,7 +30,7 @@
                         {% for k in sr %}
                             <table>
                                 <tr>
-                                    <td><a href="{% url 'peer_profile' %}">{{ k.user }}</td>
+                                   <a href=" {% url 'users/peer_profile' pk=k.pk %}"> {{k.user}} </a>
                                 </tr>
                             </table>
                         {% endfor %}
@@ -39,3 +39,4 @@
         </div>
     </body>
 </html>
+
