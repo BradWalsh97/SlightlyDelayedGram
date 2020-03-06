@@ -105,6 +105,7 @@ def follow_user(request, pk):
     context = {'latest_picture_list': latest_picture_list, 'profile': profile, 'is_followable': is_followable}
     return render(request,'users/peer_profile.html', context)
 
+
 def peer_profile(request, pk):
     profile = Profile.objects.get(pk=pk)
     requesting_user = Profile.objects.get(user=request.user)
