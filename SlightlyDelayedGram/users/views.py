@@ -7,6 +7,7 @@ from .forms import UserRegisterForm, CommentForm
 from .models import Picture, Profile, Comment
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
+from django.core.mail import send_mail
 
 
 def home(request):
@@ -74,14 +75,27 @@ def profile(request):
 
 @login_required
 def follow_user(request, pk):
+    user_followed = Profile.objects.get(pk=pk) #The user which is being followed
+    user_following = Profile.objects.get(user=request.user) #The user who is following
     if request.method == 'POST':
-        user_followed = Profile.objects.get(pk=pk) #The user which is being followed
-        user_following = Profile.objects.get(user=request.user) #The user who is following
         # Append users to corresponding lists
-        user_followed.followed = user_followed.followed + "," + user_following.user.username
-        user_following.following = user_following.following + "," + user_followed.user.username
+        if not user_followed.followed:
+            user_followed.followed = user_following.user.username
+        else:
+            user_followed.followed = user_followed.followed + "," + user_following.user.username
+        if not user_following.following:
+            user_following.following = user_followed.user.username
+        else:
+            user_following.following = user_following.following + "," + user_followed.user.username
+        
         user_following.save()
         user_followed.save()
+
+    send_mail('Follow Notification',
+    user_following.user.username + ' is now following you!',
+    'SlightlyDelayedGram123@gmail.com',
+    [user_followed.user.email],
+    fail_silently=False)
 
     #Reload Peer_Profile
     profile = Profile.objects.get(pk=pk)
