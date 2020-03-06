@@ -15,11 +15,11 @@ install:
   - pip install -r SlightlyDelayedGram/requirements.txt
 before_script: 
   - cd SlightlyDelayedGram
-  - manage.py makemigrations
-  - manage.py migrate
+  - python3 manage.py makemigrations
+  - python3 manage.py migrate
   #- mysql -e 'create database test;' -u root
 script: 
   #- pwd
   #- ls
   #- tail users/tests.py
-  - python manage.py test
+  - python3 manage.py test
