@@ -8,8 +8,6 @@ from .models import Picture, Profile, Comment
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 
-import json
-
 
 def home(request):
     context = {
@@ -74,13 +72,16 @@ def profile(request):
 
     # Determine if profile is followable
     is_followable = True
-    if(Profile.user == request.user):
+    profile_owner = request.user
+    if(profile_owner == request.user):
         is_followable = False
     else:
-        following = Profile.objects.filter(user=request.user).following
-        following = json.loads(following)
-        if(following.contains(request.user)):
-            is_followable = False
+        following = Profile.objects.get(user=request.user).following
+        following = following.split(',')
+        for user in following:
+            if(user == request.user):
+                is_followable = False
+                break
 
     context = {'latest_picture_list': latest_picture_list, 'is_followable': is_followable}
     return render(request,'users/profile.html', context)
