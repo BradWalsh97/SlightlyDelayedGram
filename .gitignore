@@ -14,3 +14,9 @@ SlightlyDelayedGram/.idea/SlightlyDelayedGram.iml
 SlightlyDelayedGram/.idea/modules.xml
 SlightlyDelayedGram/.idea/misc.xml
 SlightlyDelayedGram/.idea/inspectionProfiles/profiles_settings.xml
+
+SlightlyDelayedGram/SlightlyDelayedGram/__pycache__/*
+SlightlyDelayedGram/tests/__pycache__/*
+SlightlyDelayedGram/users/__pycache__/*
+SlightlyDelayedGram/.vscode
+.vscode/
