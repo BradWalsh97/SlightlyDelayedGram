@@ -1,10 +1,7 @@
 from django.test import TestCase
 from users.models import Picture, Profile
-from PIL import Image
 from django.utils import timezone
 from django.contrib.auth.models import User
-import base64
-import io
 
 
 class TestPostPic(TestCase):
