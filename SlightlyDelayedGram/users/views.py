@@ -35,6 +35,9 @@ class PictureListView(ListView):
 def picture_detail(request, pk):
     picture = get_object_or_404(Picture, pk=pk)
     comments = Comment.objects.filter(picture=picture)
+    is_liked = False
+    if picture.likes.filter(id=request.user.pk).exists():
+        is_liked = True
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST or None)
@@ -50,6 +53,8 @@ def picture_detail(request, pk):
         'picture': picture,
         'comments': comments,
         'comment_form': comment_form,
+        'is_liked': is_liked,
+        'total_likes': picture.total_likes(),
     }
 
     return render(request, 'users/picture_detail.html', context)
@@ -104,6 +109,18 @@ def follow_user(request, pk):
     latest_picture_list = Picture.objects.filter(owner=user_followed.user).order_by('-post_date')
     context = {'latest_picture_list': latest_picture_list, 'profile': profile, 'is_followable': is_followable}
     return render(request,'users/peer_profile.html', context)
+
+
+def like_picture(request):
+   post = get_object_or_404(Picture, id=request.POST.get('picture_id'))
+   is_liked = False
+   if post.likes.filter(id=request.user.pk).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+   else:
+        post.likes.add(request.user)
+        is_liked = True
+   return HttpResponseRedirect(post.get_absolute_url())
 
 
 def peer_profile(request, pk):
