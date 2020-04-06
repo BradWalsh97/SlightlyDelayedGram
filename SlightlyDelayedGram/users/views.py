@@ -8,6 +8,7 @@ from .models import Picture, Profile, Comment
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 
 def home(request):
@@ -34,6 +35,9 @@ class PictureListView(ListView):
 def picture_detail(request, pk):
     picture = get_object_or_404(Picture, pk=pk)
     comments = Comment.objects.filter(picture=picture)
+    is_liked = False
+    if picture.likes.filter(id=request.user.pk).exists():
+        is_liked = True
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST or None)
@@ -49,6 +53,8 @@ def picture_detail(request, pk):
         'picture': picture,
         'comments': comments,
         'comment_form': comment_form,
+        'is_liked': is_liked,
+        'total_likes': picture.total_likes(),
     }
 
     return render(request, 'users/picture_detail.html', context)
@@ -104,6 +110,19 @@ def follow_user(request, pk):
     context = {'latest_picture_list': latest_picture_list, 'profile': profile, 'is_followable': is_followable}
     return render(request,'users/peer_profile.html', context)
 
+
+def like_picture(request):
+   post = get_object_or_404(Picture, id=request.POST.get('picture_id'))
+   is_liked = False
+   if post.likes.filter(id=request.user.pk).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+   else:
+        post.likes.add(request.user)
+        is_liked = True
+   return HttpResponseRedirect(post.get_absolute_url())
+
+
 def peer_profile(request, pk):
     profile = Profile.objects.get(pk=pk)
     requesting_user = Profile.objects.get(user=request.user)
@@ -131,6 +150,18 @@ def upload_picture(request):
         pic = request.FILES['image']
         model = Picture(owner=request.user, picture_object=pic, post_date=timezone.now())
         model.save()
+        profile = Profile.objects.get(user=request.user)
+        followers_list = profile.followed.split(',')
+        print(followers_list)
+        for follower in followers_list:
+            user_email = User.objects.get(username=follower).email
+            print(user_email)
+            send_mail('New Picture Notification',
+            request.user.username + ' has posted!',
+            'SlightlyDelayedGram123@gmail.com',
+            [user_email],
+            fail_silently=False)
+
         return redirect('profile')
     except:
         return redirect('profile')
