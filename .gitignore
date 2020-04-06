@@ -20,3 +20,5 @@ SlightlyDelayedGram/tests/__pycache__/*
 SlightlyDelayedGram/users/__pycache__/*
 SlightlyDelayedGram/.vscode
 .vscode/
+
+SlightlyDelayedGram/SlightlyDelayedGram/__pycache__/
