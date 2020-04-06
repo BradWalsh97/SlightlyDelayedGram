@@ -11,11 +11,9 @@
                             <a href="{% url 'picture_detail' pk=Picture.pk %}"><img src="{{Picture.picture_object.url}}" style= "margin-left:0; margin-right:0; margin-top:10px; margin-bottom:10px" width="450" height="350" class="img-rounded"/></a>
                                                     <p>By {{ Picture.owner }} on {{ Picture.post_date }}</p>
                                                     {{ Picture.total_likes }} Like{{ Picture.total_likes | pluralize}} &nbsp;&nbsp;&nbsp;
-
                                                     {# <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-plus"></span> Follow this User</a>#}
+                                                    <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
                                                     <a href="{% url 'picture_detail' pk=Picture.pk %}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-comment"></span> {{ Picture.comments.count }} Comments</a>
-
-
                         </div>
                     </div>
                 </div>
