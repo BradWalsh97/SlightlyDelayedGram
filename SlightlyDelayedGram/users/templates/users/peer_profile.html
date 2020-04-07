@@ -3,7 +3,7 @@
     {% load crispy_forms_tags %}
     {% if messages %}
         {% for message in messages %}
-            <div>
+<div xmlns="http://www.w3.org/1999/html">
                 {{ message }}
             </div>
         {% endfor %}
@@ -20,9 +20,11 @@
                         <p>
                             <form method="POST" action="{% url 'follow' profile.pk %}">
                                 {% csrf_token %}
-                                <button type = "submit" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Follow this User</button>
+                                <button type = "submit" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Follow this User</button>
                             </form>
                         </p>
+                        {% else %}
+                                <button type = "submit" class="btn btn-default"><span class="glyphicon glyphicon-ok" disabled></span> You are following this user</button>
                         {% endif %}
                     </p>
             </div>
@@ -42,18 +44,14 @@
                             <div class="col-sm-6 col-md-4" >
                                 <div class="thumbnail">
                                     <div class="caption">
-                                        <img src="{{picture.picture_object.url}}" width="450" height="375" class="img-rounded"/>
+                                        <img src="{{picture.picture_object.url}}" width="375" height="375" class="img-rounded"/>
                                         <h4>{{ picture.title }}</h4>
-                    <p>By {{ user.username }} on {{ picture.post_date }}</p>
-                    <p>{{ picture.caption }}</p>
-                    <p>
-                        <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
-                    </p>
-                    <p>
-                        <form method="POST" action="{% url 'delete' picture.pk %}">
-                            {% csrf_token %}
-                            <button type="submit">Delete</button>
-                        </form>
+                                        <p>By {{ user.username }} on {{ picture.post_date }}</p>
+                                         {{ picture.total_likes }} Like{{ picture.total_likes | pluralize}} &nbsp;&nbsp;&nbsp;
+                                        <p>{{ picture.caption }}</p>
+                                        <p>
+                                            <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
+                                            <a href="{% url 'picture_detail' pk=picture.pk %}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-comment"></span> {{ picture.comments.count }} Comments</a>
                     </p>
                 </div>
             </div>
