@@ -3,7 +3,7 @@
     {% load crispy_forms_tags %}
     {% if messages %}
         {% for message in messages %}
-            <div>
+<div xmlns="http://www.w3.org/1999/html">
                 {{ message }}
             </div>
         {% endfor %}
@@ -47,6 +47,7 @@
                                         <img src="{{picture.picture_object.url}}" width="450" height="375" class="img-rounded"/>
                                         <h4>{{ picture.title }}</h4>
                                         <p>By {{ user.username }} on {{ picture.post_date }}</p>
+                                         {{ picture.total_likes }} Like{{ picture.total_likes | pluralize}} &nbsp;&nbsp;&nbsp;
                                         <p>{{ picture.caption }}</p>
                                         <p>
                                             <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>

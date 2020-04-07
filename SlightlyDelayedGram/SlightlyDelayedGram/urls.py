@@ -35,5 +35,6 @@ urlpatterns = [
     path('trending/', user_views.trending, name='trending'),
     path('search/', user_views.search, name='search'),
     path('peer_profile/<int:pk>/', user_views.peer_profile, name='peer_profile'),
-    path('peer_profile/<int:pk>/follow', user_views.follow_user, name='follow')
+    path('peer_profile/<int:pk>/follow', user_views.follow_user, name='follow'),
+    path('like/', user_views.like_picture, name='like_picture')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
