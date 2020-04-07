@@ -4,7 +4,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
-
 class TestFollowUser(TestCase):
     def setUp(self):
         #create user who will be followed
@@ -16,13 +15,8 @@ class TestFollowUser(TestCase):
         #create users who will follow the followedUser
         self.followingUser1 = User.objects.create_user('jim')
         self.followingUser1.save()
-
         self.followingUser2 = User.objects.create_user('tim')
         self.followingUser2.save()
-
-
-
-
 
     #test to see if followed list changes when user is followed
     def test_follow_a_user(self):
