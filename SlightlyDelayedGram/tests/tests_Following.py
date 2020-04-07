@@ -52,4 +52,23 @@ class TestFollowUser(TestCase):
 
         self.assertEquals(self.followingUser1.following, "Bob,Fred")
 
+    #check to makesure user does not show up as a follower if they
+    #dont follow a given user
+    def test_not_following(self):
+        self.followingUser3 = User.objects.create_user('toby')
+        self.followingUser3.save()
+
+        self.followedUser1.followed = self.followingUser1.username
+        self.followedUser1.followed = self.followedUser1.followed + \
+            ',' + self.followingUser2.username
+
+        self.assertEquals(self.followedUser1.followed, 'jim,tim')
+
+        followList = self.followedUser1.followed.split(',')
+        #we want to make sure that only jim and tim are in the 
+        #follow list
+        for follower in followList:
+            self.assertNotEquals(follower, 'toby')
+
+
 
