@@ -113,7 +113,7 @@ def like_picture(request):
         is_liked = True
    return HttpResponseRedirect(post.get_absolute_url())
 
-
+@login_required
 def peer_profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     requesting_user = Profile.objects.get(user=request.user)
