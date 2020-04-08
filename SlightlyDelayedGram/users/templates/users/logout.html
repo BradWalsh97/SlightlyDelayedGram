@@ -6,11 +6,11 @@
                 {{ message }}
             </div>
         {% endfor %}
-    {% endif%}
-    <h2>You have been logged out</h2>
-    <div>
-         <small>
-            <a href="{% url 'login' %}">Log In Again</a>
+    {% endif %}
+    <div class="container img-repsonsive" style="padding:20px; max-width: 700px;">
+        <h2 style = "text-align: center">You have been logged out</h2>
+        <small>
+            <a href="{% url 'login' %}"><h4 style = "text-align: center">Log in Again</h4></a>
         </small>
     </div>
 {% endblock %}

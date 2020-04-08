@@ -16,7 +16,7 @@
             <a class="navbar-brand" style="text-align: center" href="{% url 'users-home' %}">Slightly Delayed Gram</a>
 
           <ul class="navbar-nav navbar-left">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="{% url 'profile' %}">Profile</a>
             </li>
             <li class="nav-item">
@@ -31,12 +31,15 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
             </li>
+        {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
             </li>
+        {% else %}
             <li class="nav-item">
-              <a class="nav-link disabled" href="{% url 'login' %}">Log In</a>
+              <a class="nav-link" href="{% url 'login' %}">Log In</a>
             </li>
+        {% endif %}
           </ul>
         </nav>
 
@@ -64,11 +67,11 @@
 {#                <ul class="nav navbar-nav navbar-right">#}
 {#                    <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>#}
 {#                    <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>#}
-{#                    {% if user.is_authenticated %}#}
-{#                        <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>#}
-{#                    {% else %}#}
-{#                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>#}
-{#                    {% endif %}#}
+{#                {% if user.is_authenticated %}#}
+{#                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>#}
+{#                {% else %}#}
+{#                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>#}
+{#                {% endif %}#}
 {#                </ul>#}
 {#            </div>#}
 {#        </div>#}
