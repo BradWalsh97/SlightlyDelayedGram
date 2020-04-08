@@ -10,10 +10,13 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 
-
+@login_required
 def home(request):
+    profile = get_object_or_404(Profile, id=request.user.pk)
+    picture_list = Picture.objects.filter(owner__in=profile.following.all()).order_by('-post_date')
+
     context = {
-        'Pictures': Picture.objects.all()
+        'Pictures': picture_list
     }
     return render(request, 'users/main.html', context)
 
@@ -23,7 +26,6 @@ def trending(request):
         'Pictures': Picture.objects.all()
     }
     return render(request, 'users/trending.html', context)
-
 
 class PictureListView(ListView):
     model = Picture

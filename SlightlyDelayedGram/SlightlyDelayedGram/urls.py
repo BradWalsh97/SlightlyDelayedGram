@@ -23,7 +23,7 @@ from users.views import PictureListView
 
 
 urlpatterns = [
-    path('', PictureListView.as_view(), name='users-home'),
+    path('', user_views.home, name='users-home'),
     path('Picture/<int:pk>/', user_views.picture_detail, name='picture_detail'),
     path('admin/', admin.site.urls),
     path('register/', user_views.register, name='register'),
