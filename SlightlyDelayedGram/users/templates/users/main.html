@@ -1,9 +1,9 @@
 {% extends "users/base.html" %}
 {% block content %}
-
+    <div class="container img-repsonsive" style ="padding:20px; max-width: 700px;" >
     {% for Picture in Pictures %}
 
-    <div class="container img-repsonsive" style ="padding:0; margin-top: 20px;" >
+
       <div class="card">
           <div class="card-body">
               <a href="{% url 'peer_profile' pk=Picture.owner.pk %}"><img src={{ Picture.owner.profile.image.url }}  width="65" height="65" class="img-circle" alt="italy"></a>
@@ -15,7 +15,10 @@
               <a href="{% url 'picture_detail' pk=Picture.pk %}" class="btn btn-light">{{ Picture.total_likes }} Like{{ Picture.total_likes | pluralize}}</a>
               <a href="{% url 'picture_detail' pk=Picture.pk %}" class="btn btn-light">{{ Picture.comments.count }} Comment{{ Picture.comments.count | pluralize}}</a>
           </div>
-      </div>
+
+              </div>
+        <br>
+
 
 
 {#        <div style = "margin-left:285px;" class="center">#}
@@ -40,4 +43,5 @@
 
 
     {%  endfor %}
+
 {% endblock %}
