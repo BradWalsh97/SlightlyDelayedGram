@@ -69,6 +69,7 @@ class TestFollowUser(TestCase):
         #follow list
         for follower in followList:
             self.assertNotEquals(follower, 'toby')
+#end follower testing
 
 
 
