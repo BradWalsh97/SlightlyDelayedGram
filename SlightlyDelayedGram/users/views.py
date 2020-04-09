@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.db.models import Count
 
+
 @login_required
 def home(request):
     profile = get_object_or_404(Profile, id=request.user.pk)
@@ -39,9 +40,6 @@ class PictureListView(ListView):
 def picture_detail(request, pk):
     picture = get_object_or_404(Picture, pk=pk)
     comments = Comment.objects.filter(picture=picture)
-    is_liked = False
-    if picture.likes.filter(id=request.user.pk).exists():
-        is_liked = True
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST or None)
@@ -57,8 +55,6 @@ def picture_detail(request, pk):
         'picture': picture,
         'comments': comments,
         'comment_form': comment_form,
-        'is_liked': is_liked,
-        'total_likes': picture.total_likes(),
     }
 
     return render(request, 'users/picture_detail.html', context)
