@@ -14,18 +14,18 @@
         <img width="100" height="100" class="img-circle mx-auto"
              src="{{ profile.user.profile.image.url|default:"media/default.jpg" }}">
         <h1 class="account-heading">{{ profile.user.username }}</h1>
-        <p style="margin: 0px">
-            {% if is_followable %}
+            <p style = "margin:0px">
                 <p>
-                <form method="POST" action="{% url 'follow' profile.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-light"> Follow this User</button>
-                </form>
+                    <form action="{% url 'follow_user' %}" method="post">
+                        {% csrf_token %}
+                        {% if is_followed %}
+                            <button type = "submit" name="profile_id" value="{{ profile.pk }}" class="btn btn-light">You are following this user</button>
+                        {% else %}
+                            <button type = "submit" name="profile_id" value="{{ profile.pk }}" class="btn btn-light"> Follow this user</button>
+                        {% endif %}
+                        </form>
                 </p>
-            {% else %}
-                <button type="submit" class="btn btn-light">Unfollow this User</button>
-            {% endif %}
-        </p>
+            </p>
     </div>
 
 
