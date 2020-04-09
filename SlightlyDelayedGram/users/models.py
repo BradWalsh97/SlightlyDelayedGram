@@ -12,6 +12,14 @@ class Picture(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     picture_object = models.ImageField(upload_to='photos/', blank=True)
     post_date = models.DateTimeField(default=timezone.now)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
+
+    def total_likes(self):
+        return self.likes.count()
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('picture_detail', args=[str(self.id)])
 
     def delete(self, *args, ** kwargs):
         self.picture_object.delete()
