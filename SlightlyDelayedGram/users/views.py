@@ -9,6 +9,7 @@ from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
+from django.db.models import Count
 
 @login_required
 def home(request):
@@ -23,9 +24,10 @@ def home(request):
 
 def trending(request):
     context = {
-        'Pictures': Picture.objects.all()
+        'Pictures': Picture.objects.annotate(like_count=Count('likes')).order_by('-like_count')
     }
     return render(request, 'users/trending.html', context)
+
 
 class PictureListView(ListView):
     model = Picture
