@@ -1,78 +1,44 @@
-<!DOCTYPE html>
-<html>
+{% extends "users/base.html" %}
+{% block content %}
 
-<meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <title>Slightly Delayed Gram</title>
-
-    <!---------------------- NAV BAR---------------------------------------->
-    <nav class="navbar navbar-light" style="background-color: white;">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="{% url 'users-home' %}" class="navbar-left"><img src="/media/logo2.png"></a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="#"></a></li>
-                    <li class="active"><a href="{% url 'users-home' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                    <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                    <li><a href="{% url 'trending' %}"><span class="glyphicon glyphicon-globe"></span> Trending</a></li>
-                    <li><a href="{% url 'search' %}"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
-                    <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-                    {% else %}
-                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <body style="background-color:#E9EAEB;">
+<body style="background-color:#E9EAEB;">
+<div class="container img-repsonsive" style="padding:20px; max-width: 700px;">
+    <h1>Search for a Profile</h1>
+    <form method="Post" action="/search/">
+        {% csrf_token %}
         <div>
-          <h1>Search Profile</h1>
-            <form method="Post" action="/search/">
-                {% csrf_token %}
-                <div>
-                    <div>
-              <input type="text" name="srh" class="form-control" placeholder="Enter profile">
-                    </div>
-                    <label>
-                        <br>
-                       &nbsp;&nbsp; <button type="submit" class="btn btn-primary">Search</button>
-                    </label>
-                </div>
-            </form>
             <div>
-                {% if messages %}
-                <ul class="messages">
-                    {% for k in messages %}
-                        <li>{{ k }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div><br>
-                <div>
-                    {% if sr %}
-                        {% for k in sr %}
-                            <table>
-                                <tr>
-                                &nbsp;    <a href=" {% url 'peer_profile' pk=k.pk %}"> {{k.user}} </a>
-                                </tr>
-                            </table>
-                        {% endfor %}
-                    {% endif %}
-                </div>
+                <input type="text" name="srh" class="form-control" placeholder="Enter profile">
+            </div>
+            <label>
+                <br>
+                &nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary">Search</button>
+            </label>
         </div>
-    </body>
+    </form>
+    <div>
+        {% if messages %}
+            <ul class="messages">
+                {% for k in messages %}
+                    <li>{{ k }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        {% if sr %}
+            {% for k in sr %}
+                <table>
+                    <tr>
+                        &nbsp; <a href=" {% url 'peer_profile' pk=k.pk %}"> {{ k.user }} </a>
+                    </tr>
+                </table>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+</body>
 </html>
+{% endblock %}

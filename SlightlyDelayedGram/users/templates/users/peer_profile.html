@@ -3,65 +3,56 @@
     {% load crispy_forms_tags %}
     {% if messages %}
         {% for message in messages %}
-<div xmlns="http://www.w3.org/1999/html">
+            <div>
                 {{ message }}
             </div>
         {% endfor %}
-    {% endif%}
+    {% endif %}
 
 
-    <div style = "margin-left:285px;" class = "content-section">
-        <div class = "media">
-            <img width="100" height="100" class="img-circle" src="{{ user.profile.image.url|default:"media/default.jpg" }} ">
-            <div class = "media-body">
-                <h1 class = "account-heading">{{ profile.user.username }}</h1>
-                    <p>
-                        <p>
-                            <form action="{% url 'follow_user' %}" method="post">
-                                {% csrf_token %}
-                                {% if is_followed %}
-                                    <button type = "submit" name="profile_id" value="{{ profile.pk }}" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> You are following this user</button>
-                                {% else %}
-                                    <button type = "submit" name="profile_id" value="{{ profile.pk }}" class="btn btn-default"><span class="glyphicon glyphicon-plus" disabled></span> Follow this user</button>
-                                {% endif %}
-                                </form>
-                        </p>
-                    </p>
-            </div>
-        </div>
+    <div class="container img-repsonsive text-center" style="margin-top: 20px">
+        <img width="100" height="100" class="img-circle mx-auto"
+             src="{{ profile.user.profile.image.url|default:"media/default.jpg" }}">
+        <h1 class="account-heading">{{ profile.user.username }}</h1>
+            <p style = "margin:0px">
+                <p>
+                    <form action="{% url 'follow_user' %}" method="post">
+                        {% csrf_token %}
+                        {% if is_followed %}
+                            <button type = "submit" name="profile_id" value="{{ profile.pk }}" class="btn btn-light">You are following this user</button>
+                        {% else %}
+                            <button type = "submit" name="profile_id" value="{{ profile.pk }}" class="btn btn-light"> Follow this user</button>
+                        {% endif %}
+                        </form>
+                </p>
+            </p>
     </div>
 
 
 
-
-
     {% if latest_picture_list %}
+        <div class="container img-repsonsive" style="padding:20px; max-width: 700px;">
         {% for picture in latest_picture_list %}
-            <div class="card mb-3">
+
+            <div class="card">
+                <a href="{% url 'picture_detail' pk=picture.pk %}"><img class="card-img"
+                                                                        src="{{ picture.picture_object.url }}"
+                                                                        alt="Card image"
+                                                                        style="width:100%; border-radius: 0px"></a>
                 <div class="card-body">
-                    <p class="lead">
-                        <div style = "margin-left:270px;"  class="row">
-                            <div class="col-sm-6 col-md-4" >
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <img src="{{picture.picture_object.url}}" width="375" height="375" class="img-rounded"/>
-                                        <h4>{{ picture.title }}</h4>
-                                        <p>By {{ user.username }} on {{ picture.post_date }}</p>
-                                         {{ picture.total_likes }} Like{{ picture.total_likes | pluralize}} &nbsp;&nbsp;&nbsp;
-                                        <p>{{ picture.caption }}</p>
-                                        <p>
-                                            <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
-                                            <a href="{% url 'picture_detail' pk=picture.pk %}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-comment"></span> {{ picture.comments.count }} Comments</a>
-                    </p>
+                    <p class="card-text">By {{ picture.owner.username }} on {{ picture.post_date }}</p>
+                    <a href="{% url 'picture_detail' pk=picture.pk %}" class="btn btn-light">{{ picture.total_likes }}
+                        Like{{ picture.total_likes | pluralize }}</a>
+                    <a href="{% url 'picture_detail' pk=picture.pk %}"
+                       class="btn btn-light">{{ picture.comments.count }}
+                        Comment{{ picture.comments.count | pluralize }}</a>
                 </div>
             </div>
-            </div>
-            </div>
-            </p>
-            </div>
-            </div>
+            <br>
+
+
+
         {% endfor %}
-    {% else %}
-        <p style = "margin-left:285px;" ></p>
     {% endif %}
+</div>
 {% endblock %}
