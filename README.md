@@ -9,14 +9,15 @@ Instagram Knockoff project for SOEN341. Creating an Instagram-like application t
 
 ## Features
 The application will also include two additional features, which are:<br/>
-* Liking Posts<br/>
-* Trending Page which sorts all posts from most liked to least liked<br/>
+* Direct user to user Messaging<br/>
+* Forwarding Posts to other Users<br/>
 
 ## Technology
 SlightlyDelayedGram will employ the following technologies and services:<br/>
 * Python (Utilizing Django Web Framework)<br/>
 * HTML and CSS (Web Layout)<br/>
-* Google Cloud PLatform (GCP)<br/>
+* Amazon Web Services (AWS)<br/>
+* Docker (OS Level Virtualization)<br/>
 
 ## Group Members
 |       Name                |       Student ID          |       GitHub              |

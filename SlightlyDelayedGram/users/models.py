@@ -35,12 +35,8 @@ class Comment(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    following = models.ManyToManyField(User, related_name='following', blank=True)
-    followed = models.ManyToManyField(User, related_name='followed', blank=True)
-
-    def get_absolute_url(self):
-        from django.urls import reverse
-        return reverse('peer_profile', args=[str(self.id)])
+    following = models.TextField(blank=True)
+    followed = models.TextField(blank=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
