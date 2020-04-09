@@ -52,8 +52,6 @@ class TestLikePictures(TestCase):
         self.picture1.likes.add(self.likePicUser2)
         self.assertEquals(self.picture1.likes.all()[0], self.likePicUser1)
         self.assertEquals(self.picture1.likes.all()[1], self.likePicUser2)
-
-
         self.picture1.likes.remove(self.likePicUser1)
         self.assertNotEquals(self.picture1.likes.all()[0], self.likePicUser1)
         self.assertEquals(self.picture1.likes.all()[0], self.likePicUser2)
