@@ -23,7 +23,7 @@ from users.views import PictureListView
 
 
 urlpatterns = [
-    path('', PictureListView.as_view(), name='users-home'),
+    path('', user_views.home, name='users-home'),
     path('Picture/<int:pk>/', user_views.picture_detail, name='picture_detail'),
     path('admin/', admin.site.urls),
     path('register/', user_views.register, name='register'),
@@ -35,6 +35,6 @@ urlpatterns = [
     path('trending/', user_views.trending, name='trending'),
     path('search/', user_views.search, name='search'),
     path('peer_profile/<int:pk>/', user_views.peer_profile, name='peer_profile'),
-    path('peer_profile/<int:pk>/follow', user_views.follow_user, name='follow'),
+    path('follow/', user_views.follow_user, name='follow_user'),
     path('like/', user_views.like_picture, name='like_picture')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
