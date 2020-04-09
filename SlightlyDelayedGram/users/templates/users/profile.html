@@ -7,59 +7,54 @@
                 {{ message }}
             </div>
         {% endfor %}
-    {% endif%}
+    {% endif %}
 
 
-    <div style = "margin-left:285px;" class = "content-section">
-        <div class = "media">
-            <img width="100" height="100" class="img-circle" src="{{ user.profile.image.url|default:"media/default.jpg" }} ">
-            <div class = "media-body">
-                <h1 class = "account-heading">{{ user.username }}</h1>
-            </div>
-        </div>
+    <div class="container img-repsonsive text-center" style="margin-top: 20px">
+        <img width="100" height="100" class="img-circle mx-auto"
+             src="{{ user.profile.image.url|default:"media/default.jpg" }}">
+        <h1 class="account-heading">{{ user.username }}</h1>
     </div>
 
-
-
-    <form  style = "margin-left:285px; margin-bottom:5px; margin-top:5px;" action='upload' method="post" enctype="multipart/form-data">
+    <form class="container img-repsonsive text-center" action='upload' method="post" enctype="multipart/form-data"
+          style="margin-bottom: 0px">
         {% csrf_token %}
-        <p class="btn btn-default" >
+        <p class="btn btn-light" style="margin:0px">
             <input type="file" name="image">
         </p>
-        <input href="#" class="btn btn-default" role="button" type="submit" value="Submit" />
+        <input href="#" class="btn btn-light" role="button" type="submit" value="Submit" style="height:44px"/>
     </form>
 
 
     {% if latest_picture_list %}
+        <div class="container img-repsonsive" style="padding:20px; max-width: 700px;">
         {% for picture in latest_picture_list %}
-            <div class="card mb-3">
+
+            <div class="card">
+                <a href="{% url 'picture_detail' pk=picture.pk %}"><img class="card-img"
+                                                                        src="{{ picture.picture_object.url }}"
+                                                                        alt="Card image"
+                                                                        style="width:100%; border-radius: 0px"></a>
                 <div class="card-body">
-                    <p class="lead">
-                        <div style = "margin-left:270px;"  class="row">
-                            <div class="col-sm-6 col-md-4" >
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <img src="{{picture.picture_object.url}}" width="450" height="375" class="img-rounded"/>
-                                        <h4>{{ picture.title }}</h4>
-                                        <p>By {{ user.username }} on {{ picture.post_date }}</p>
-                                        <p>{{ picture.caption }}</p>
-                                        <p>
-                                            <a href="#" class="btn btn-default" role="button"><span class="glyphicon glyphicon-heart-empty"></span> Like</a>
-                                            <a href="{% url 'picture_detail' pk=picture.pk %}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-comment"></span> {{ picture.comments.count }} Comments</a>
-                                            <form method="POST" action="{% url 'delete' picture.pk %}">
-                                                {% csrf_token %}
-                                                <button type = "submit" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Delete Post</button>
-                                            </form>
-                    </p>
+                    <p class="card-text">By {{ user.username }} on {{ picture.post_date }}</p>
+                    <a href="{% url 'picture_detail' pk=picture.pk %}" class="btn btn-light">{{ picture.total_likes }}
+                        Like{{ picture.total_likes | pluralize }}</a>
+                    <a href="{% url 'picture_detail' pk=picture.pk %}"
+                       class="btn btn-light">{{ picture.comments.count }}
+                        Comment{{ picture.comments.count | pluralize }}</a>
+                    <a style = "display: inline-block"><form method="POST" action="{% url 'delete' picture.pk %}">
+                        {% csrf_token %}
+                        <button type = "submit" class="btn btn-light">Delete Post</button>
+                    </form></a>
                 </div>
             </div>
-            </div>
-            </div>
-            </p>
-            </div>
-            </div>
+            <br>
+
+
+
         {% endfor %}
     {% else %}
-        <p style = "margin-left:285px;" >Get started by uploading your first picture!</p>
+        <p>Get started by uploading your first picture!</p>
     {% endif %}
+</div>
 {% endblock %}

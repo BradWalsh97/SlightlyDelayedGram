@@ -6,7 +6,7 @@ from django.urls import reverse
 class UsersViewsTest(TestCase):
     def test_home(self):
         response = self.client.get(reverse('users-home'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302) # Code 302 since login is required and user is not logged in
 
     def test_login(self):
         response = self.client.get(reverse('login'))

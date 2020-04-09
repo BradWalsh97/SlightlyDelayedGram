@@ -6,41 +6,77 @@
    <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <title>Slightly Delayed Gram</title>
 
     <!---------------------- NAV BAR---------------------------------------->
-    <nav class="navbar navbar-light" style="background-color: white;">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="#" class="navbar-left"><img src="/media/logo2.png"></a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="#"></a></li>
-                    <li class="active"><a href="{% url 'users-home' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                    <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                    <li><a href="{% url 'trending' %}"><span class="glyphicon glyphicon-globe"></span> Trending</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Messages</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
-                    <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-                    {% else %}
-                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
+
+        <nav class="navbar navbar-expand-sm bg-white navbar-light justify-content-between ">
+
+                    <a class="navbar-brand" style="text-align: center" href="{% url 'users-home' %}">Slightly Delayed Gram</a>
+
+          <ul class="navbar-nav navbar-left">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'trending' %}">Trending</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'search' %}">Search</a>
+            </li>
+          </ul>
+
+
+
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+            </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            </li>
+        {% endif %}
+          </ul>
+        </nav>
+
     <!---------------------- END OF NAV BAR---------------------------------------->
+
+{#OLD NAV BAR#}
+{#    <nav class="navbar navbar-light" style="background-color: white;">#}
+{#        <div class="container-fluid">#}
+{#            <div class="navbar-header">#}
+{#                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">#}
+{#                    <span class="icon-bar"></span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                    <span class="icon-bar"></span>#}
+{#                </button>#}
+{#                <a href="{% url 'users-home' %}" class="navbar-left"><img src="/media/logo2.png"></a>#}
+{#            </div>#}
+{#            <div class="collapse navbar-collapse" id="myNavbar">#}
+{#                <ul class="nav navbar-nav">#}
+{#                    <li><a href="#"></a></li>#}
+{#                    <li class="active"><a href="{% url 'users-home' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>#}
+{#                    <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>#}
+{#                    <li><a href="{% url 'trending' %}"><span class="glyphicon glyphicon-globe"></span> Trending</a></li>#}
+{#                    <li><a href="{% url 'search' %}"><span class="glyphicon glyphicon-search"></span> Search</a></li>#}
+{#                </ul>#}
+{#                <ul class="nav navbar-nav navbar-right">#}
+{#                    <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>#}
+{#                    <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>#}
+{#                {% if user.is_authenticated %}#}
+{#                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>#}
+{#                {% else %}#}
+{#                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>#}
+{#                {% endif %}#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
 
 
 <body style="background-color:#E9EAEB;">
