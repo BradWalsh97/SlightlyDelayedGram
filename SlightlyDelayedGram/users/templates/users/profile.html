@@ -42,9 +42,10 @@
                     <a href="{% url 'picture_detail' pk=picture.pk %}"
                        class="btn btn-light">{{ picture.comments.count }}
                         Comment{{ picture.comments.count | pluralize }}</a>
-                    <form method="POST" action="{% url 'delete' picture.pk %}" style="display: inline-block">
+                    <a style = "display: inline-block"><form method="POST" action="{% url 'delete' picture.pk %}">
                         {% csrf_token %}
-                        <a class="btn btn-light" type="submit">Delete Post</a>
+                        <button type = "submit" class="btn btn-light">Delete Post</button>
+                    </form></a>
                 </div>
             </div>
             <br>
