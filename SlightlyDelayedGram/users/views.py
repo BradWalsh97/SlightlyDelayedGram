@@ -83,7 +83,8 @@ def profile(request):
     context = {
         'latest_picture_list': latest_picture_list
     }
-    return render(request,'users/profile.html', context)
+    return render(request, 'users/profile.html', context)
+
 
 @login_required
 def follow_user(request):
@@ -99,23 +100,24 @@ def follow_user(request):
         requesting_user.following.add(profile.user)
         is_followed = True
         send_mail('Follow Notification',
-        requesting_user.user.email + ' is now following you!',
-        'SlightlyDelayedGram123@gmail.com',
-        [profile.user.email],
-        fail_silently=False)
+                  requesting_user.user.email + ' is now following you!',
+                  'SlightlyDelayedGram123@gmail.com',
+                  [profile.user.email],
+                  fail_silently=False)
     return HttpResponseRedirect(profile.get_absolute_url())
 
 
 def like_picture(request):
-   post = get_object_or_404(Picture, id=request.POST.get('picture_id'))
-   is_liked = False
-   if post.likes.filter(id=request.user.pk).exists():
+    post = get_object_or_404(Picture, id=request.POST.get('picture_id'))
+    is_liked = False
+    if post.likes.filter(id=request.user.pk).exists():
         post.likes.remove(request.user)
         is_liked = False
-   else:
+    else:
         post.likes.add(request.user)
         is_liked = True
-   return HttpResponseRedirect(post.get_absolute_url())
+    return HttpResponseRedirect(post.get_absolute_url())
+
 
 @login_required
 def peer_profile(request, pk):
@@ -125,17 +127,15 @@ def peer_profile(request, pk):
     if profile.followed.filter(id=request.user.pk).exists():
         is_followed = True
 
-
     # Determine if profile is followable
-   
 
     latest_picture_list = Picture.objects.filter(owner=profile.user).order_by('-post_date')
     context = {
-        'latest_picture_list': latest_picture_list, 
+        'latest_picture_list': latest_picture_list,
         'profile': profile,
-        'is_followed' : is_followed,
+        'is_followed': is_followed,
     }
-    return render(request,'users/peer_profile.html', context)
+    return render(request, 'users/peer_profile.html', context)
 
 
 def upload_picture(request):
@@ -149,10 +149,10 @@ def upload_picture(request):
             user_email = User.objects.get(username=follower).email
             print(user_email)
             send_mail('New Picture Notification',
-            request.user.username + ' has posted!',
-            'SlightlyDelayedGram123@gmail.com',
-            [user_email],
-            fail_silently=False)
+                      request.user.username + ' has posted!',
+                      'SlightlyDelayedGram123@gmail.com',
+                      [user_email],
+                      fail_silently=False)
 
         return redirect('profile')
     except:
@@ -165,6 +165,7 @@ def delete_picture(request, pk):
         picture.delete()
     return redirect('profile')
 
+
 @login_required
 def search(request):
     if request.method == 'POST':
@@ -174,10 +175,10 @@ def search(request):
             match = Profile.objects.filter(Q(user__username__istartswith=srch))
 
             if match:
-                return render(request, 'users/search.html', {'sr':match})
+                return render(request, 'users/search.html', {'sr': match})
             else:
                 messages.error(request, 'no result found')
-        
+
         else:
             return HttpResponseRedirect('/search/')
     return render(request, 'users/search.html')
