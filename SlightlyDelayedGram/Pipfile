@@ -47,7 +47,7 @@ wrapt = "==1.11.2"
 Cycler = "==0.10.0"
 Django = "==3.0.3"
 Pillow = "==6.2.1"
-PyYAML = "==5.2"
+PyYAML = "==5.4"
 
 [requires]
 python_version = "3.8"
